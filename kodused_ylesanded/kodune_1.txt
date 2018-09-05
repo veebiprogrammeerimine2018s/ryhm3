@@ -1,0 +1,21 @@
+Esimene kodune ülesanne on peamiselt seotud töövahenditega:
+
+Loomulikult on vaja tarkvara, seega palun hoolitsege, et Teie arvutites oleks:
+1) terminal, näiteks PC platvormil Putty (SSH klientprogramm)
+2) SCP (FTP edasiarendus) klientprogramm failide kopeerimiseks üle võrgu, näiteks WinSCP, FileZilla
+3) skriptide kirjutamiseks sobilik tekstiredaktor, näiteks PC platvormil Notepad ++. Sobivad ka Sublime Text, Atom ...
+
+Koduseks tööks on:
+1) Palun proovida, kas õnnestub luua terminalühendus serveriga greeny.cs.tlu.ee
+Kuna greeny on sisevõrgu server, siis on vaja kõigepealt luua ühendus ülikooli avaliku serveriga lin2.tlu.ee ja sealt edasi ...
+Tunnis kasutasime putty programmi (mõned märkmed tund_1 kataloogis).
+NB! lin2.tlu.ee kasutaja on sama, mis ÕIS-is ja ülikooli e-posti kontol.
+
+Katsetage, kas suudate ls käsuga näha, et Teil on olemas public_html kataloog.
+
+2) SCP klientprogrammiga looge ühendus serveriga greeny.cs.tlu.ee, kopeerige sealt public_html kataloogist index.html fail oma arvutisse. Muutke seda, lisades vähemalt ühe tekstilõigu (html element <p>). Muudetud fail laadige taas serverisse.
+
+3) Vaadake oma muudetud veebilehte!!! Kuna olete ülikooli jaoks välisvõrgus, siis peate looma SSH tunneli veebi jaoks ning brauseri liikluse läbi selle tunneli juhtima. Soovitan valida ühe brauseri, mida kasutategi siis edaspidi vaid selle jaoks (pole vaja kogu aeg tunneli osa ümberhäälestada).
+Vaadake juhendeid, mis mainitud github rühma avalehel!
+
+Edu.ee kõigile!
