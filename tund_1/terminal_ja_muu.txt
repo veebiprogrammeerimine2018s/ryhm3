@@ -1,0 +1,58 @@
+﻿Veebikataloogi avaleht näiteks:
+index.html
+_____________________
+veebileht koosneb elementidest, pannakse kirja märgenditega (tag)
+Näiteks: <p>See on üks lõik teksti</p>
+
+____________________________
+http://greeny.cs.tlu.ee/~rinde/veebiprogrammeerimine2018s/
+
+oma leht greeny's:
+http://greeny.cs.tlu.ee/~kasutajanimi
+näiteks: http://greeny.cs.tlu.ee/~jaagala
+
+___________________________________________________
+Terminalühendus (SSH)
+Putty
+
+Väljast ülikooli sisse (või vajadusel just selle arvutiga töötamiseks): lin2.tlu.ee  (see pakub teile näiteks veebiaadressi www.tlu.ee/~kasutaja).
+Seal on sama kasutaja ja parool, mis ülikooli e-postil ja ÕIS-il.
+
+Esimest korda ühendust luues tuleb vastata küsimusele krüptovõtme kokkuleppimise osas. Õige vastus on "Yes".
+
+Loome edasi terminalühenduse sisevõrgu serveriga greeny:
+
+ssh greeny.cs.tlu.ee -l kasutajanimi
+või
+ssh kasutajanimi@greeny.cs.tlu.ee
+
+NB! Ka siin võidakse krüptovõtme küsimus esitada, vastamiseks tuleb kirjutada "yes" ja vajutada ENTER klahvi.
+
+Mõned käsud (tuleb kirjutada ja ENTER klahvi vajutada):
+
+Ühenduse katkestamiseks kirjutate käsu: exit
+
+Parooli vahetus: passwd
+
+vaatame kataloogi sisu: ls
+
+Loome kataloogi: mkdir katalooginimi
+(näiteks veebi kataoog: mkdir public_html)
+
+Kataloogi liikumiseks: cd katalooginimi
+(näiteks: cd public_html)
+
+______________________________________________________
+Failide (ka veebilehe) laadimiseks serverisse või serverist oma arvutisse:
+
+FTP uuendus SCP, WinSCP (FileZilla)
+
+_______________________________________________________
+Kursuse info
+
+https://github.com/veebiprogrammeerimine2018s
+
+
+
+
+
