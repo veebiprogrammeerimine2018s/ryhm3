@@ -4,7 +4,7 @@ Siia kogume kõik veebiprogrammeerimise kursusega seonduva info.
 
 ### Ühendus Greeny'sse
 
-* Windows | [VIDEO](https://youtu.be/kg5NAsRQAJ8)
+* Windows (WinSCP) | [VIDEO](https://youtu.be/kg5NAsRQAJ8)
 
     * [Putty tunneli tegemise õpetus (eesti keeles, ekraanitõmmistega)](http://minitorn.tlu.ee/~jaagup/kool/java/kursused/09/veebipr/naited/greenytunnel/greenytunnel.pdf)
 
