@@ -38,4 +38,4 @@ ssh greeny_username@greeny.cs.tlu.ee
 ```
 
 ### Kodus greeny serveris olevate veebilehtede brauseris vaatamiseks
-Vaadake tlu.ee kodulehel üksuste alajaotusest infotehnoloogia osakonda. Selle lehelt leiate vasakul menüüs "juhendid ja abimaterjalid" ning nende seas uurige "Tallinna Ülikooli veebipuhvri teenuse kasutamine väljaspool ülikooli arvutivõrku"!
+Vaadake tlu.ee kodulehel peamenüüs "Ülikool" tugiüksuste alajaotusest infotehnoloogia osakonda. Selle lehelt leiate vasakul menüüs "juhendid ja abimaterjalid" (https://www.tlu.ee/taxonomy/term/79/juhendid-ja-abimaterjalid) ning nende seas uurige "Tallinna Ülikooli veebipuhvri teenuse kasutamine väljaspool ülikooli arvutivõrku"!
