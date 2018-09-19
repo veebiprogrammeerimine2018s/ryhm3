@@ -1,0 +1,34 @@
+Teisel kodusel tööl on mitu osa:
+
+1) Täiendage index faili selliselt, et "tänase päeva" näitamisel ka kuu nimi oleks eesti keeles. Selleks siis veel üks massiiv kuude nimedega. Tervet kuupäeva polegi enam vaja serverilt küsida, nüüd on vaja kõike eraldi (kuupäev, kuu ja aasta).
+Ehk siis veebilehel peab paistma tänane päev kujul: "Täna on kolmapäev, 19. september 2018."
+
+2) photo.php lehest võiks teha koopia (näiteks photo2.php). Sellel näidake vaid ühte, juhuslikku pilti pics kataloogist.
+
+3) page.php lehele lisage veel ka sünnikuu valik.
+Põhimõtteliselt on meie vormi (<form>) sisse vaja tekitada rippmenüü (dropdown menu), mille loob HTML element <select>. Iga üksiku valiku tekitamiseks on <select> elemendi tütarelement <option>.
+<option> elemendi sisuks on tekst, mida kasutajale valikul näidatakse, atribuudiga value määratakse aga väärtus, mis serverile edastatakse. Sünnikuu puhul on lugu selline, et inimene näeb küll ilusaid eestikeelseid valikuid aga taustal peaks serverile minema arvulised väärtused 1 ... 12.
+Kogu rippmenüü peaks seega kokku saama selline:
+<select name="birthMonth">
+  <option value="1">jaanuar</option>
+  <option value="2">veebruar</option>
+  <option value="3">märts</option>
+  <option value="4">aprill</option>
+  <option value="5">mai</option>
+  <option value="6">juuni</option>
+  <option value="7">juuli</option>
+  <option value="8">august</option>
+  <option value="9">september</option>
+  <option value="10">oktoober</option>
+  <option value="11">november</option>
+  <option value="12">detsember</option>
+</select>
+
+Kui vaid sellist rippmenüüd oleks vaja, siis saaks lausa  ilma php-ta AGA kasutajale peab kõigepealt pakkuma valikuna käesolevat kuud, ehk siis praegu septembrit!
+Selleks tuleb käesoleva kuu valikule lisada atribuut selected, näiteks ii:
+<option value="9" selected>september</option>
+Nii on vaja ikkagi programmeerida, iga valiku loomisel kontrollida, kas on käesolev kuu ja ...
+
+Järgmises tunnis näitate ette!
+Tervitades
+Andrus Rinde
