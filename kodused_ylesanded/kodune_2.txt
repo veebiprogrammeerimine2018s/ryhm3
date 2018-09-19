@@ -28,6 +28,7 @@ Kui vaid sellist rippmenüüd oleks vaja, siis saaks lausa  ilma php-ta AGA kasu
 Selleks tuleb käesoleva kuu valikule lisada atribuut selected, näiteks ii:
 <option value="9" selected>september</option>
 Nii on vaja ikkagi programmeerida, iga valiku loomisel kontrollida, kas on käesolev kuu ja ...
+NB! Kui kontrollite, kas miski on võrdne ..., siis kasutate kaht võrdusmärki! Näiteks if ($x == 3)
 
 Järgmises tunnis näitate ette!
 Tervitades
