@@ -8,11 +8,26 @@
   
   //var_dump($_POST);
   if (isset($_POST["firstName"])){
-	$name = $_POST["firstName"];
+	//$name = $_POST["firstName"];
+	$name = test_input($_POST["firstName"]);
   }
   if (isset($_POST["surName"])){
-	$surname = $_POST["surName"];
+	//$surname = $_POST["surName"];
+	$surname = test_input($_POST["surName"]);
   }
+  
+function test_input($data) {
+  echo "Koristan!\n";
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+function fullName() {
+  $fullName = $GLOBALS["name"] . " " .$GLOBALS["surname"];
+  echo $fullName;
+}
   
 ?>
 
@@ -37,7 +52,7 @@
 	<p>See leht on valminud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames ja ei oma mingisugust, mõtestatud või muul moel väärtuslikku sisu.</p>
 	<hr>
 	
-	<form method="POST">
+	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	  <label>Eesnimi:</label>
 	  <input name="firstName" type="text" value="">
       <label>Perekonnanimi:</label>
@@ -85,7 +100,9 @@
 	
 	<?php
 	  if (isset($_POST["firstName"])){
-		echo "<br><p>Olete elanud järgnevatel aastatel:</p>";
+		//demoks üks väike funktsioon (tegelikult mõttetu)
+		fullName();
+		echo "<br><p>" .$fullName .". Olete elanud järgnevatel aastatel:</p>";
 		echo "<ul> \n";
 		for ($i = $_POST["birthYear"]; $i <= date("Y"); $i ++){
 		  echo "<li>" . $i ."</li> \n";
