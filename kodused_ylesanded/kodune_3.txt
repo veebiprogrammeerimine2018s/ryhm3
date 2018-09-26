@@ -1,0 +1,50 @@
+Seekordne kodune töö seob veebiprogrammeerimise andmebaaside projekteerimisega.
+
+Vabandan, et esialgselt tunnis välja hüütud mõtet muutsin aga nii on pisut mõistlikum!
+
+Kahjuks me ei jõudnud tunnis andmeid lugeda, lisasin tund4 kataloogi veel ühe faili readmsg.php, mis loeb kõik sõnumid. See kutsub functions.php failist funktsiooni readallmessages. Sinna lisasin kommentaare. Loodetavasti saate kõik kenasti aru. Järgnev ülesanne tugineb nii tunnis tehtul kui ka sellel lisatul.
+
+Looge leht (näiteks kiisu.php), mille ülemises osas on vahendid uue kiisu lisamiseks andmebaasi ja alumises osas oleks näha kõik olemasolevad kiisud (koos uue lisamisega ilmub uusim ka teiste järel).
+
+Selleks on vaja uude php faili lisada vorm, mis võimaldab sisestada vajalikke andmeid:
+kiisu nimi
+kiisu värvus
+kiisu saba pikkus
+
+Andmete sisestamisel (submit), oleks ilus kontrollida, et kõik andmed oleks kirja pandud ehk siis if tingimustes peaks olema hulk "and" operaatoriga eraldatud osi (näiteks: !empty($_POST["catname"]) and !empty($_POST["catcolor"])    )
+Kes soovib, võib proovida värve ka <select> elemendiga ette anda, nagu kuude nimedega tegima.
+
+Ühendage selle php failiga meie functions.php fail ja looge sinna uus funktsioon, mis:
+* argumentidena võtab vastu kolm muutujat (kassinimi, kasivärv ja kassisabapikkus), näiteks: function addcat($catname, $catcolor, $cattaillength)
+
+* loob andmebaasiühenduse
+* loob käsu, mis kirjutab andmed teie andmebaasi kasside tabelisse ja käivitab selle
+* sulgeb lisamise käsu 
+*loob käsu andmete lugemiseks ja loeb andmed
+*sulgeb käsu
+*sulgeb andmebaasiühenduse.
+*väljastab tulemused väljakutsujale (return ...)
+
+Erinevalt tunnis tehtust, on nüüd vaja kolme muutujat saata ja lugeda.
+Andmete kirjutamisel on nüüd kirjutamise SQL käsu üldkuju:
+
+INSERT INTO tabelinimi (kassinimelahter, kassivärvilahter, kassisabapikkuselahter) VALUES (?, ?, ?)"
+
+Andmete sidumisel on nüüd vaja rohkem kirja panna kui tunnis.
+
+stmt->bind_param("ssi", $catname, $catcolor, $cattaillength);
+sest nüüd on nimi ja värvus tekstid (s ja s), saba pikkus täisarv i ning kõik kolm tuleb muutujatena edastada.
+
+Lugemisel tuleb nüüd ka rohkem küsida, SQL üldkuju oleks:
+SELECT kassinimelahter, kassivärvilahter, kassisabapikkuselahter FROM tabel
+
+Tulemuste sidumisel muutujatega on vaja kõik kolm ka "kinni püüda":
+$stmt->bind_result($readcatname, $readcatcolor, $readcattaillength);
+
+Ja while tsüklis tuleb nüüd kõik need ka html elemendi <p> sisse põimida, et tuleks mõistlik "jutt" ehk loend kokku.
+Soovitan püüda hoopis numbritega loendi (<ol>) või täpploendi (<ul>) luua (nagu aastatega, millal elanud oleme, tunni näide).
+
+NB! Selle loodud funktsiooni väljakutsumisel tuleb nime, värvi ja sabapikkuse muutujad samas järjekorras ka sulgudesse lisada!
+$muutuja = addcat($catname, $catcolor, $cattaillength);
+
+Soovitan ka sisendi testimise funktsiooni (test_input) tõsta functions.php faili! Siis tuleb ta kindlasti page.php failist kustutada ja ka selle lehega tuleb functions.php siduda.
