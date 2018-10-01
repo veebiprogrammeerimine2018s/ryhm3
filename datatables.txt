@@ -2,3 +2,7 @@ Anonüümsed sõnumid:
 
 CREATE TABLE `if18_rinde`.`vpamsg3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `message` VARCHAR(256) NOT NULL , `validator` INT(11) NULL , `valid` INT(1) NULL , `validated` TIMESTAMP NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
+Kasutajad:
+
+CREATE TABLE `if18_rinde`.`vpusers3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `firstname` VARCHAR(30) NOT NULL , `lastname` VARCHAR(30) NOT NULL , `birthdate` DATE NOT NULL , `gender` INT(1) NOT NULL , `email` VARCHAR(100) NOT NULL , `password` VARCHAR(60) NOT NULL , `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+

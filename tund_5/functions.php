@@ -5,6 +5,29 @@ require("../../../../vp2018config.php");
 //echo $GLOBALS["serverPassword"];
 $database = "if18_rinde";
 
+  function signup($name, $surname, $email, $gender, $birthDate, $password){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("INSERT INTO vpusers3 (firstname, lastname, birthdate, gender, email, password) VALUES(?,?,?,?,?,?)");
+	echo $mysqli->error;
+	//krüpteerin parooli, kasutades juhuslikku soolamisfraasi (salting string)
+	$options = [
+	  "cost" => 12,
+	  "salt" => substr(sha1(rand()), 0, 22),
+	  ];
+	$pwdhash = password_hash($password, PASSWORD_BCRYPT, $options);
+	echo "Kuupäev: ".$birthDate;
+	$stmt->bind_param("sssiss", $name, $surname, $email, $gender, $birthDate, $pwdhash);
+	if($stmt->execute()){
+		$notice = "ok";
+	} else {
+	  $notice = "error" .$stmt->error;	
+	}
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+
   function saveAMsg($msg){
     //echo "Töötab!";
     $notice = ""; //see on teade, mis antakse salvestamise kohta
