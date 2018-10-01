@@ -17,7 +17,9 @@ $database = "if18_rinde";
 	  ];
 	$pwdhash = password_hash($password, PASSWORD_BCRYPT, $options);
 	echo "Kuupäev: ".$birthDate;
-	$stmt->bind_param("sssiss", $name, $surname, $email, $gender, $birthDate, $pwdhash);
+	//viga oli järgmises reas - muutujate järjekord ei vastanud SQL käsus loetletud väljade andmejärjekorrale ning kuupäeva väljaleüritati e-maili kirjutada.
+	//$stmt->bind_param("sssiss", $name, $surname, $email, $gender, $birthDate, $pwdhash);
+	$stmt->bind_param("sssiss", $name, $surname, $birthDate, $gender, $email, $pwdhash);
 	if($stmt->execute()){
 		$notice = "ok";
 	} else {
