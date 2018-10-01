@@ -5,24 +5,24 @@ require("../../../../vp2018config.php");
 //echo $GLOBALS["serverPassword"];
 $database = "if18_rinde";
 
-function saveAMsg($msg){
-  //echo "Töötab!";
-  $notice = ""; //see on teade, mis antakse salvestamise kohta
-  //loome ühenduse andmebaasiserveriga
-  $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-  //Valmistame ette SQL päringu
-  $stmt = $mysqli->prepare("INSERT INTO vpamsg3 (message) VALUES(?)");
-  echo $mysqli->error;
-  $stmt->bind_param("s", $msg);//s - string, i - integer, d - decimal
-  if ($stmt->execute()){
-	$notice = 'Sõnum: "' .$msg .'" on salvestatud!';  
-  } else {
-	$notice = "Sõnumi salvestamisel tekkis tõrge: " .$stmt->error;
+  function saveAMsg($msg){
+    //echo "Töötab!";
+    $notice = ""; //see on teade, mis antakse salvestamise kohta
+    //loome ühenduse andmebaasiserveriga
+    $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+    //Valmistame ette SQL päringu
+    $stmt = $mysqli->prepare("INSERT INTO vpamsg3 (message) VALUES(?)");
+    echo $mysqli->error;
+    $stmt->bind_param("s", $msg);//s - string, i - integer, d - decimal
+    if ($stmt->execute()){
+      $notice = 'Sõnum: "' .$msg .'" on salvestatud!';  
+    } else {
+	  $notice = "Sõnumi salvestamisel tekkis tõrge: " .$stmt->error;
+    }
+    $stmt->close();
+    $mysqli->close();
+    return $notice;
   }
-  $stmt->close();
-  $mysqli->close();
-  return $notice;
-}
 
   //funktsioon, mis loeb kõiki salvestatud sõnumeid (seda kutsub readmsg.php)
   function readallmessages(){
@@ -49,6 +49,14 @@ function saveAMsg($msg){
 	$mysqli->close();
 	//tagastan funktsiooni väljakutsujale kokku pandud html-koodi
 	return $notice;
+  }
+     
+  function test_input($data) {
+    //echo "Koristan!\n";
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
   }
 ?>
 
