@@ -1,0 +1,50 @@
+Neljanda kodutööna tuleb üle käia uue kasutaja lisamine.
+Kellel tunnis ikkagi lõpuks tööle ei hakanud - githubis (https://github.com/veebiprogrammeerimine2018s) on tund5 all töötavad failid. Sealt saab vajadusel kopeerida.
+
+Teie rühma tunnis suutsin teha jämeda vea, nagu algaja. Kasutajat ei salvestatud sest saatsin andmed tabelisse vales järjekorras (bind_param real olid muutujad vales järjekorras). Vaadake github'ist, seal on korras fail.
+
+Muutke palun natuke ka uue kasutaja andmete sisestuse osa.
+Määrake e-maili sisestuse välja tüübiks "email"!
+Määrake salasõna sisestuse välja tüübiks "password"!
+
+newuser.php failis lisage sisendi kontroll kõigile andmetele:
+eesnimi (juba olemas)
+perekonnanimi
+sünnipäev - kas on valitud
+sünnikuu - kas on valitud
+sünniaasta - kas on valitud
+sugu (juba olemas)
+email - kas kirjutatud, pole tühi
+password - kas on olemas, pole tühi ja on 8 märki või enam.
+
+Password seejuures on ainus, mida pole vaja "meeles pidada" ehk $_POST massiivist sisestusväljale uuesti kirjutada.
+
+Sünniaja osas on vaja kontrollida, kas kõik kuupäeva osad on sisestatud. Iga osa kohta oma Error muutuja ning sisestusvalikute alla lisage lehele tekstiala, kuhu php abil kirjutate kõik võimalikud kuupäevaga seotud veateated (lisage kenasti tühikud vahele).
+Kui need kõik korras, siis järgnebki juba terve kuupäeva kontroll (olemas).
+
+Parooli kontrollimisel on vaja vaadata, et oleks olemas ja vähemalt 8 märki pikk.
+Teksti pikkuse saab teada funktsiooniga strlen() ehk string length.
+Sulgudesse, mille pikkust tahate:strlen($_POST["password"]) ja siis juba võrdlete väärtusega 8.
+
+Lisage veel teinegi sisestusväli paroolile, mille sildiks "Korrake salasõna:".
+Nimeks näiteks "confirmpassword".
+Nüüd on parooli puhul vaja kontrollida, kas kaks sisestatut on võrdsed ja kas on vähemalt 8 märki pikk. Muidu Error.
+
+Lõpuks vaadake kõik üle, et kus saab, asendage $_POST... juba määratud muutujaga jne.
+
+Kes tahab end proovile panna, see täiendab salvestusfunktsiooni signup osaga, mis kontrollib, ega sisestatud emailiga (kasutajatunnusega) juba kasutajat olemas pole.
+
+Selleks tuleb salvestuse alguseks teha päring andmetabelisse, küsida kasutaja id-d, kellel on selline email:
+SELECT id FROM tabelinimi WHERE email=?
+
+bind_param abil saadate funktsioonile saadetud (kasutaja loomiseks sisestatud) e-maili aadressi.
+täidate käsu (execute). Siis kontrollite, kas tuli selline kasutaja id - kui tuli, siis on olemas, kui ei tulnud, siis võib salvestusega jätkata ...
+if($stmt->fetch()){
+  //selline kasutaja olemas, andke veateade
+} else {
+  //kasutajat pole, seega kogu salvestamine siia sisse
+}
+
+Jälgige, millal käsu sulgete, millal uue loote, millal ühenduse sulgete ...
+
+Edu.ee kõigile
