@@ -1,10 +1,35 @@
 <?php
   require("../../../../vp2018config.php");
   $database = "if18_rinde";
-  
-  //alustan sessiooni
-  session_start();
-  
+
+  function signin($email, $password){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT password FROM vpusers3 WHERE email=?");
+	echo $mysqli->error;
+	$stmt->bind_param("s", $email);
+	$stmt->bind_result($passwordFromDb);
+	if($stmt->execute()){
+		//kui päring õnnestus
+	  if($stmt->fetch()){
+		//kasutaja on olemas
+		if(password_verify($password, $passwordFromDb)){
+		  //kui salasõna klapib
+		  $notice = "Logisite sisse!";
+		} else {
+		  $notice = "Vale salasõna!";
+		}
+	  } else {
+		$notice = "Sellist kasutajat (" .$email .") ei leitud!";  
+	  }
+	} else {
+	  $notice = "Sisselogimisel tekkis tehniline viga!" .$stmt->error;
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }//sisselogimine lõppeb
   
   //kasutaja salvestamine
   function signup($name, $surname, $email, $gender, $birthDate, $password){
