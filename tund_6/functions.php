@@ -4,7 +4,38 @@
   
   //alustan sessiooni
   session_start();
-
+  
+    function readmsgforvalidation($editId){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT message FROM vpamsg3 WHERE id = ?");
+	$stmt->bind_param("i", $editId);
+	$stmt->bind_result($msg);
+	$stmt->execute();
+	if($stmt->fetch()){
+		$notice = $msg;
+	}
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+  
+  function readallunvalidatedmessages(){
+	$notice = "<ul> \n";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT id, message FROM vpamsg3 WHERE valid IS NULL ORDER BY id DESC");
+	echo $mysqli->error;
+	$stmt->bind_result($id, $msg);
+	$stmt->execute();
+	
+	while($stmt->fetch()){
+		$notice .= "<li>" .$msg .'<br><a href="validatemessage.php?id=' .$id .'">Valideeri</a>' ."</li> \n";
+	}
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+  
   function signin($email, $password){
 	$notice = "";
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
@@ -105,9 +136,7 @@
 	$mysqli->close();
 	return $notice;
   }
-  
-
-   
+     
   function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);

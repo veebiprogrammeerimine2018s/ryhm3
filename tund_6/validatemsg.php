@@ -14,6 +14,8 @@
 	header("Location:  index_3.php");
 	exit();
   }
+  
+  $notice = readallunvalidatedmessages();
 ?>
 <!DOCTYPE html>
 <html>
