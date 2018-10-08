@@ -1,6 +1,6 @@
 Viies kodune töö
 
-Soovitan lugeda Jaagup Kippar'i koostatud * [juhendit] (http://minitorn.tlu.ee/~jaagup/kool/java/loeng/veebipr/veebipr1.pdf)
+Soovitan lugeda Jaagup Kippar'i koostatud [juhendit](http://minitorn.tlu.ee/~jaagup/kool/java/loeng/veebipr/veebipr1.pdf)
 Seal alates lk 18 on just see andmebaasiga suhtlemise osa ja SQL käskudest ka pisut. Kahjuks on tal seal muutujate ja funktsioonide nimed eestikeelsed - ärge seda stiili järgi tehke!
 
 1) Täiendage validatemessage.php faili (valideerib ehk lubab või keelab valitud sõnumi näitamist). Seal peab olema lisatud osa, mis kinnitamise nupu (submitValidation) vajutamisel kutsub välja valideerimise funktsiooni. Funktsioon peab POST infona saama kätte valitud ehk muudetava sõnumi id ning valideerimise väärtuse (0 või 1).
