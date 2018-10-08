@@ -1,14 +1,17 @@
 <?php
   require("../../../../vp2018config.php");
   $database = "if18_rinde";
+  
+  //alustan sessiooni
+  session_start();
 
   function signin($email, $password){
 	$notice = "";
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-	$stmt = $mysqli->prepare("SELECT password FROM vpusers3 WHERE email=?");
+	$stmt = $mysqli->prepare("SELECT id, firstname, lastname, password FROM vpusers3 WHERE email=?");
 	echo $mysqli->error;
 	$stmt->bind_param("s", $email);
-	$stmt->bind_result($passwordFromDb);
+	$stmt->bind_result($idFromDb, $firstnameFromDb, $lastnameFromDb, $passwordFromDb);
 	if($stmt->execute()){
 		//kui päring õnnestus
 	  if($stmt->fetch()){
@@ -16,6 +19,16 @@
 		if(password_verify($password, $passwordFromDb)){
 		  //kui salasõna klapib
 		  $notice = "Logisite sisse!";
+		  //määran sessioonimuutujad
+		  $_SESSION["userId"] = $idFromDb;
+		  $_SESSION["userFirstName"] = $firstnameFromDb;
+		  $_SESSION["userLastName"] = $lastnameFromDb;
+		  $_SESSION["userEmail"] = $email;
+		  //liigume kohe vaid sisselogitutele mõeldud pealehele
+		  $stmt->close();
+	      $mysqli->close();
+		  header("Location: main.php");
+		  exit();
 		} else {
 		  $notice = "Vale salasõna!";
 		}
