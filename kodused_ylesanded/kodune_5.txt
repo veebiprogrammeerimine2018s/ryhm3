@@ -1,0 +1,34 @@
+Viies kodune töö
+1) Täiendage validatemessage.php faili (valideerib ehk lubab või keelab valitud sõnumi näitamist). Seal peab olema lisatud osa, mis kinnitamise nupu (submitValidation) vajutamisel kutsub välja valideerimise funktsiooni. Funktsioon peab POST infona saama kätte valitud ehk muudetava sõnumi id ning valideerimise väärtuse (0 või 1).
+Funktsioon (minul validatemsg) lisage loomulikult functions.php faili.
+Vaja on kasutada SQL käsku, mis muudab/uuendab andmekirjet (UPDATE).
+
+UPDATE vpamsg3 SET validator=?, valid=?, validated=now() WHERE id=?
+
+Uuendatakse tabelis vpamsg3 (vaadake, mis nimega Teie enda tabel on!!!)
+Uuendamisel kirjutatakse uued väärtused väljadele, kus kirjas valideerija (validator) - sinna saadetakse sisseloginud kasutaja id (saate selle sessioonimuutujast $_SESSION["userId"] ), kus on kirjas kas lubatakse näidata või mitte (valid) - sinna siis see väärtus 0 või 1, kus on kirjas, millal valideeriti - sinna väärtus SQL oma funktsiooniga now().
+Uuendatakse just seda kirjet (sõnumit), mille id saadeti.
+
+Kui kirje uuendamine õnnestus, siis tuleks kohe suunduda tagasi eelmisele lehele validatemsg.php (kus valideerimata sõnumite nimekiri on). Seal just valideeritud sõnumit enam näha olla ei tohiks.
+
+2) Kui see kenasti töötab, siis täiendage avalehte (kus saab sisse logida). Muidugi on selle muutmise tulemuse testimiseks vaja ka välja logida (lisasime näite vähemalt main.php lehele).
+Teie avalehel (minul siis index_3.php) kutsutakse real 51 välja funktsioon allvalidmessages()
+See tuleb functions.php faili lisada.
+Funktsioon peab andmetabelist lugema kõik need anonüümsed sõnumid, milledel on valideerimise väärtus 1 (lubatud näidata).
+Kasutage SQL käsku:
+SELECT message FROM vpamsg3 WHERE valid=?
+See loeb kõiki sõnumeid, mille valid väljal on kindel väärtus. Siinkohal tulebbind_param käsuga küsimärk ? asendada väärtusega 1 ehk siis eespool luua muutuja, millele sihuke väärtus anda:
+$valid = 1;
+Ja see siis bind_param käsuga külge.
+
+Kasutada võite ka SQL-käsku, mis toob sõnumid ekraanile järjestatuna valideerimise aja järgi:
+SELECT message FROM vpamsg3 WHERE valid=? ORDER BY validated
+
+Või siis lausa nii, et kõige viimasena valideeritu on kõige esimene:
+SELECT message FROM vpamsg3 WHERE valid=? ORDER BY validated DESC
+
+3) Looge veel üks leht, kus peab sisselogitud olema. Näiteks users.php.
+Sellele lehele väljastage nimekiri kõigist kasutajatest (eesnimi, perekonnanimi, e-mail).
+Lisage main.php lehele ka link, et sellele kasutajate lehele saada.
+Seejuures võiksite enda välja jätta (selle, kes parajasti sisseloginud on). Ehk siis tahate, et SQL käsk küsiks andmeid, kus id poleks parajasti sisseloginud kasutaja id ($_SESSION["userId"]).
+SELECT väljad mida tahate FROM tabel WHERE id != ?
