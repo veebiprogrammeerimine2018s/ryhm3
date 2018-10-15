@@ -5,7 +5,103 @@
   //alustan sessiooni
   session_start();
   
-    function readmsgforvalidation($editId){
+  function readallvalidatedmessagesbyuser(){
+	$msghtml = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT id, firstname, lastname FROM vpusers3");
+	echo $mysqli->error;
+	$stmt->bind_result($idFromDb, $firstnameFromDb, $lastnameFromDb);
+	
+	$stmt2 = $mysqli->prepare("SELECT message, valid FROM vpamsg3 WHERE validator=?");
+	echo $mysqli->error;
+	$stmt2->bind_param("i", $idFromDb);
+	$stmt2->bind_result($msgFromDb, $validFromDb);
+	
+	$stmt->execute();
+	$stmt->store_result();//jätab saadu pikemalt meelde, nii saab ka järgmine päring seda kasutada
+	
+	while($stmt->fetch()){
+	  //panen valideerija nime paika
+	  $msghtml .="<h3>" .$firstnameFromDb ." " .$lastnameFromDb ."</h3> \n";
+	  $stmt2->execute();
+	  while($stmt2->fetch()){
+		$msghtml .= "<p><b>";
+		if($validFromDb == 0){
+		  $msghtml .= "Keelatud: ";
+		} else {
+		  $msghtml .= "Lubatud: ";
+		}
+		$msghtml .= "</b>" .$msgFromDb ."</p> \n";
+	  }
+	}
+	$stmt->close();
+	$stmt2->close();
+	$mysqli->close();
+	return $msghtml;
+  }
+  
+  function listusers(){
+	$notice = "";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT firstname, lastname, email FROM vpusers3 WHERE id !=?");
+	//$stmt = $mysqli->prepare("SELECT firstname, lastname, email, description FROM vpusers3, vpuserprofiles WHERE vpuserprofiles.userid=vpusers3.id");
+	
+	$mysqli->error;
+	$stmt->bind_param("i", $_SESSION["userId"]);
+	$stmt->bind_result($firstname, $lastname, $email);
+	//$stmt->bind_result($firstname, $lastname, $email, $description);
+	if($stmt->execute()){
+	  $notice .= "<ol> \n";
+	  while($stmt->fetch()){
+		  $notice .= "<li>" .$firstname ." " .$lastname .", kasutajatunnus: " .$email ."</li> \n";
+		  //$notice .= "<li>" .$firstname ." " .$lastname .", kasutajatunnus: " .$email ."<br>" .$description ."</li> \n";
+	  }
+	  $notice .= "</ol> \n";
+	} else {
+		$notice = "<p>Kasutajate nimekirja lugemisel tekkis tehniline viga! " .$stmt->error;
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+	return $notice;
+  }
+  
+  function allvalidmessages(){
+	$html = "";
+	$valid = 1;
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT message FROM vpamsg3 WHERE valid=? ORDER BY validated DESC");
+	echo $mysqli->error;
+	$stmt->bind_param("i", $valid);
+	$stmt->bind_result($msg);
+	$stmt->execute();
+	while($stmt->fetch()){
+		$html .= "<p>" .$msg ."</p> \n";
+	}
+	$stmt->close();
+	$mysqli->close();
+	if(empty($html)){
+		$html = "<p>Kontrollitud sõnumeid pole.</p>";
+	}
+	return $html;
+  }
+
+function validatemsg($editId, $validation){
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("UPDATE vpamsg3 SET validator=?, valid=?, validated=now() WHERE id=?");
+	$stmt->bind_param("iii", $_SESSION["userId"], $validation, $editId);
+	if($stmt->execute()){
+	  echo "Õnnestus";
+	  header("Location: validatemsg.php");
+	  exit();
+	} else {
+	  echo "Tekkis viga: " .$stmt->error;
+	}
+	$stmt->close();
+	$mysqli->close();
+  }
+  
+  function readmsgforvalidation($editId){
 	$notice = "";
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 	$stmt = $mysqli->prepare("SELECT message FROM vpamsg3 WHERE id = ?");

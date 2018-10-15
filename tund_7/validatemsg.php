@@ -27,9 +27,10 @@
   <h1>Sõnumid</h1>
   <p>Siin on minu <a href="http://www.tlu.ee">TLÜ</a> õppetöö raames valminud veebilehed. Need ei oma mingit sügavat sisu ja nende kopeerimine ei oma mõtet.</p>
   <hr>
-  <ul>
-
-  </ul>
+	<ul>
+	  <li><a href="?logout=1">Logi välja</a>!</li>
+	  <li><a href="main.php">Tagasi pealehele</a></li>
+	</ul>
   <hr>
   
   <?php echo $notice; ?>

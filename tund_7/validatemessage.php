@@ -19,6 +19,9 @@
 	$msg = readmsgforvalidation($_GET["id"]);  
   }
 
+  if(isset($_POST["submitValidation"])){
+	validatemsg(intval($_POST["id"]), intval($_POST["validation"]));
+  }
 ?>
 <!DOCTYPE html>
 <html>

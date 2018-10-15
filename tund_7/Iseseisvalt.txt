@@ -1,0 +1,31 @@
+1) lisada funktsionaalsus just tehtud valideeritud sõnumite näitamisele.
+Vaja näidata vaid neid inimesi/kasutajaid, kes on midagi valideerinud.
+Vihjed:
+lisaks muutuja, mille sisse kogtakse kogu loodav html. Muutuja, mille algväärtus on 0 ja mille väärtus suureneb iga kord, kui õnnestub fetch stmt2 käsuga.
+Kui loendur jääb 0-ks, sõnumeid vbalideeritud polnud, selle kasutaja html jääb põhimuutujale lisamata. Muutujad lähtestatakse.
+
+2) Lisage kasutajaprofiili loomine.
+Uus leht userprofile.php
+Sinna sisuks vorm, milles koht tutvustuse jaoks:
+<textarea rows="10" cols="80" name="description"><?php echo $mydescription; ?></textarea>
+ja värvivalikud taustale ja tekstile
+<label>Minu valitud taustavärv: </label><input name="bgcolor" type="color" value="<?php echo $mybgcolor; ?>"><br>
+
+Lehe laadimisel püütakse uuest andmetabelist vpuserprofiles lugeda vastava inimese profiili, kui see puudub, pannakse algväärtused vormi:
+"Pole iseloomustust lisanud."
+taustavärv #FFFFFF
+tekstivärv: #000000
+Kui kasutaja nüüd salvestab, siis luuakse talle profiil, see salvestatakse (INSERT).
+
+Kui profgiil oli enne olemas, siis uuendatakse (UPDATE).
+
+Lehe laadimisel tuleks profiili kontrollimise järel alati ka lehe värvid vastavaks panna:
+Selleks lehe <head> osas järgmine element:
+<style>
+	 body{background-color: #fcf196; 
+	color: #000000} 
+</style>
+
+3)Edaspidi, sisselogimisel tuleks kohe ka profiili olemasolu kontrollida ja kõikidele lehtedele see kujundus lisada. Ilmselgelt on mõistlik lisada värvid sessioonimuutujateks.
+
+Edu.ee
