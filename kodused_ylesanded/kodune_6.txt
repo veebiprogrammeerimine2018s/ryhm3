@@ -1,0 +1,48 @@
+Koduseks tööks seekord tunnis alustatud iseseisev töö ja muidugi varasemate asjade lõpetamine. Semestri teise poole alguseks oleks vaja, et kõik senine toimiks.
+
+Kuidas kõik välja näha võiks, seda näeb näiteks:
+http://greeny.cs.tlu.ee/~rinde/veebiprogrammeerimine2018s/demo/currentstate/
+
+1) lisada funktsionaalsus just tehtud valideeritud sõnumite näitamisele.
+Vaja näidata vaid neid inimesi/kasutajaid, kes on midagi valideerinud.
+Vihjed:
+Vaja juurde võtta 2 muutujat:
+* näiteks $totalhtml="", mille väärtuseks lõplik, väljastatav html;
+* näiteks counter, mis loeb iga kasutaja puhul, mitu sõnumit ta on valideerinud.
+Nüüd näeks töö nii välja:
+$stmt tulemuste kasutamise while tsüklis saab senine $msghtml kohe uue väärtusena pealkirja 3 kasutaja nime ja perekonnanimega $msghtml = "<h3> ....
+(enam ei liida senisele väärtusele juurde ehk iga kasutajaga hakkab see muutuja algusest peale).
+$counter saab samal ajal väärtuseks 0.
+$stmt2 tulemsute kasutamise while tsüklis iga kord, kui on sõnum kirja pandud, $counter ++ (väärtus suureneb).
+Kui ühe kasutaja andmetega on kõik tehtud, siis kontrollitakse, kas $counter on suurem kui 0 ehk kas mõni sõnum oli selle kasutaja poolt valideeritud. Kui jah, siis liidetakse $msghtml väärtus teise muutuja $totalhtml väärtusega ($totalhtml .= $msghtml;)
+
+
+2) Lisage kasutajaprofiili loomine.
+Uus leht userprofile.php
+Sinna sisuks vorm, milles koht tutvustuse jaoks:
+<textarea rows="10" cols="80" name="description"><?php echo $mydescription; ?></textarea>
+ja värvivalikud taustale ja tekstile
+<label>Minu valitud taustavärv: </label><input name="bgcolor" type="color" value="<?php echo $mybgcolor; ?>"><br>
+
+Lehe laadimisel püütakse uuest andmetabelist vpuserprofiles lugeda vastava inimese profiili, kui see puudub ehk if($stmt->fetch()) ei kehti, pannakse algväärtused vormi:
+"Pole iseloomustust lisanud."
+taustavärv #FFFFFF
+tekstivärv: #000000
+Kui kasutaja nüüd salvestab, siis luuakse talle profiil, see salvestatakse (INSERT).
+
+Kui profiil oli enne olemas, siis uuendatakse (UPDATE).
+
+NB! Igal kasutajal vaid üks profiil!!!
+
+NB! Kui kasutate profiili lugemiseks profiili, siis arvestage, et saate kolm erinevat infokildu (kirjeldus, taustavärv ja tekstivärv). Funktsisoon aga saab return käsuga tagastada vaid ühe muutuja. Lahenduseks oleks tagastatava muutujana kasutada massiivi. Võite näiteks eeskuju võtta signup funktsioonis parooli krüpteerimise juures loodud massiivi loomisest (seal oli $options ja tema elemente saaks küsida näiteks: $options["salt"] ).
+
+Lehe laadimisel tuleks profiili kontrollimise järel alati ka lehe värvid vastavaks panna:
+Selleks lehe <head> osas järgmine element (siin näitlikud värvid):
+<style>
+	 body{background-color: #fcf196; 
+	color: #000000} 
+</style>
+
+3)Edaspidi, sisselogimisel tuleks kohe ka profiili olemasolu kontrollida ja kõikidele lehtedele see kujundus lisada. Ilmselgelt on mõistlik lisada värvid sessioonimuutujateks.
+
+Edu.ee
