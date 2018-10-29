@@ -72,60 +72,16 @@
 			if ($uploadOk == 0) {
 				echo "Vabandame, faili ei laetud üles!";
 			// kui kõik korras, laeme üles
-			} else {
-				//sõltuvalt failitüübist, loome pildiobjekti
-				if($imageFileType == "jpg" or $imageFileType == "jpeg"){
-					$myTempImage = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
-				}
-				if($imageFileType == "png"){
-					$myTempImage = imagecreatefrompng($_FILES["fileToUpload"]["tmp_name"]);
-				}
-				if($imageFileType == "gif"){
-					$myTempImage = imagecreatefromgif($_FILES["fileToUpload"]["tmp_name"]);
-				}
-				
-				//vaatame pildi originaalsuuruse
-				$imageWidth = imagesx($myTempImage);
-				$imageHeight = imagesy($myTempImage);
-				//leian vajaliku suurendusfaktori
-				if($imageWidth > $imageHeight){
-					$sizeRatio = $imageWidth / 600;
-				} else {
-					$sizeRatio = $imageHeight / 400;
-				}
-				
-				$newWidth = round($imageWidth / $sizeRatio);
-				$newHeight = round($imageHeight / $sizeRatio);
-				$myImage = resizeImage($myTempImage, $imageWidth, $imageHeight, $newWidth, $newHeight);
-				//muudetud suurusega pilt kirjutatakse pildifailiks
-				if($imageFileType == "jpg" or $imageFileType == "jpeg"){
-				  if(imagejpeg($myImage, $target_file, 90)){
-                    echo "Korras!";
-				  } else {
-					echo "Pahasti!";
-				  }
-				}
-				
-				//imagepng($myImage, $target_file, 6)
-				//imagegif($myImage, $target_file)
-				
-				imagedestroy($myTempImage);
-				imagedestroy($myImage);
-				
-/* 				if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+			} else {			
+				if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 					echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " on üles laetud!";
 				} else {
 					echo "Vabandame, faili üleslaadimine ebaõnnestus!";
-				} */
+				}
 			}
 		}//ega failinimi tühi pole
 	}//kas on submit nuppu vajutatud
   
-  function resizeImage($image, $ow, $oh, $w, $h){
-	$newImage = imagecreatetruecolor($w, $h);
-    imagecopyresampled($newImage, $image, 0, 0 , 0, 0, $w, $h, $ow, $oh);
-	return $newImage;
-  }
   
   //lehe päise laadimise osa
   $pageTitle = "Fotode üleslaadimine";
