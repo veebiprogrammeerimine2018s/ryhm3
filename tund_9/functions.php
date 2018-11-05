@@ -5,6 +5,21 @@
   //alustan sessiooni
   session_start();
   
+  function addPhotoData($fileName, $alt, $privacy){
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+    $stmt = $mysqli->prepare("INSERT INTO vpphotos3 (userid, filename, alttext, privacy) VALUES (?, ?, ?, ?)");
+	echo $mysqli->error;
+	$stmt->bind_param("issi", $_SESSION["userId"], $fileName, $alt, $privacy);
+	if($stmt->execute()){
+	  echo "Andmebaasiga on korras!";
+	} else {
+      echo "Andmebaasiga on jama: " .$stmt->error;
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+  }
+  
   function readprofilecolors(){
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
     $stmt = $mysqli->prepare("SELECT bgcolor, txtcolor FROM vpuserprofiles3 WHERE userid=?");

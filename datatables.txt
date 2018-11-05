@@ -7,4 +7,9 @@ Kasutajad:
 CREATE TABLE `if18_rinde`.`vpusers3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `firstname` VARCHAR(30) NOT NULL , `lastname` VARCHAR(30) NOT NULL , `birthdate` DATE NOT NULL , `gender` INT(1) NOT NULL , `email` VARCHAR(100) NOT NULL , `password` VARCHAR(60) NOT NULL , `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 Kasutajaprofiilid:
+
 CREATE TABLE `if18_rinde`.`vpuserprofiles3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `userid` INT(11) NOT NULL , `description` VARCHAR(2000) NULL , `bgcolor` VARCHAR(7) NULL , `txtcolor` VARCHAR(7) NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+Üleslaetavad fotod
+
+CREATE TABLE `if18_rinde`.`vpphotos3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `userid` INT(11) NOT NULL , `filename` VARCHAR(40) NOT NULL , `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , `alttext` VARCHAR(256) NULL , `privacy` INT(1) NOT NULL , `deleted` DATE NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
