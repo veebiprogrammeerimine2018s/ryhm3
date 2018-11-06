@@ -9,7 +9,7 @@ Lisada kasutaja profiilipilt.
 Kasutaja peab saama üles laadida uue pildi. Profiilipildid tuleks salvestada eraldi kataloogi, nimeks näiteks vp_user_  timestamp  .jpg .
 * koos failinimega andmetabelisse ka kasutaja id (userid).
 * Võite kõik profiilipildid salvestada jpg failidena, kui ei vitis gif ja png võimalusi lisada. Samas usun, et gif pilti keegi profiilipidliks ei lisagi.
-*kasutajaprofiilide andmetabelisse tuleks lisada rida pildi jaoks. Minu soovitusena võiks see olla INT tüüpi, väärtuseks viimasena üles laetud selle konkreetse kasutaja profiilipildi id. (Hiljem lisame võimaluse valida profiilipilti varem üleslaetutre seast ka).
+*kasutajaprofiilide andmetabelisse tuleks lisada rida pildi jaoks. Minu soovitusena võiks see olla INT tüüpi, väärtuseks viimasena üles laetud selle konkreetse kasutaja profiilipildi id. Kohe, kui andmetabelisse on uus rida (kirje ehk record) salvestatud (INSERT) või mingi kirje muudetud (UPDATE), saab küsida, mis tema id on: $mysqli->insert_id
 
 Kasutajaprofiili laadimisel tuleb nüüd lihtsalt hakata rohkem sahmima mitme tabeliga. Muidu on ülesanne senise tegevuse kordamine.
 
