@@ -16,6 +16,8 @@
   $mydescription = "Pole tutvustust lisanud!";
   $mybgcolor = "#FFFFFF";
   $mytxtcolor = "#000000";
+  $profilePicDirectory = "../vp_picfiles/";
+  $profilePic = "vp_user_generic.png";
   
   if(isset($_POST["submitProfile"])){
 	$notice = storeuserprofile($_POST["description"], $_POST["bgcolor"], $_POST["txtcolor"]);
@@ -46,6 +48,12 @@
 
 	<p>See leht on valminud <a href="http://www.tlu.ee" target="_blank">TLÜ</a> õppetöö raames ja ei oma mingisugust, mõtestatud või muul moel väärtuslikku sisu.</p>
 	<hr>
+	<img src="<?php
+	    echo $profilePicDirectory .$profilePic;
+	  ?>" alt="<?php
+	    echo $_SESSION["userFirstName"] ." " .$_SESSION["userLastName"];
+	  ?>" style="float: right">
+	<div>
 	<h2>
 	  <?php
 	    echo $_SESSION["userFirstName"] ." " .$_SESSION["userLastName"];
@@ -63,7 +71,7 @@
 	  <label>Minu valitud tekstivärv: </label><input name="txtcolor" type="color" value="<?php echo $mytxtcolor; ?>"><br>
 	  <input name="submitProfile" type="submit" value="Salvesta profiil">
 	</form>
-	
+	</div>
 	
   </body>
 </html>
