@@ -1,5 +1,15 @@
 <?php
   require("functions.php");
+  //lisame klassi
+  require("classes/Photoupload.class.php");
+  //require("classes/Test.class.php");
+  //$littleTest = new Test(3);
+  //echo $littleTest->secretNumber;
+  //echo "Avalik number on: " .$littleTest->publicNumber;
+  //$littleTest->showValues();
+  //unset($littleTest);
+  //$littleTest->showValues();
+  
   //kui pole sisse loginud
   
   //kui pole sisselogitud
@@ -24,8 +34,8 @@
 	
 	//kas vajutati submit nuppu
 	if(isset($_POST["submitPic"])) {
-		var_dump($_POST);
-		var_dump($_FILES);
+		//var_dump($_POST);
+		//var_dump($_FILES);
 		//kas failinimi ka olemas on
 		if(!empty($_FILES["fileToUpload"]["name"])){
 		
@@ -76,63 +86,18 @@
 				echo "Vabandame, faili ei laetud üles!";
 			// kui kõik korras, laeme üles
 			} else {
-				//sõltuvalt failitüübist, loome pildiobjekti
-				if($imageFileType == "jpg" or $imageFileType == "jpeg"){
-					$myTempImage = imagecreatefromjpeg($_FILES["fileToUpload"]["tmp_name"]);
+				
+				$myPhoto = new Photoupload($_FILES["fileToUpload"]["tmp_name"], $imageFileType);
+				$myPhoto->resizeImage(600, 400);
+				$myPhoto->addWatermark();
+				$myPhoto->addText();
+				$saveResult = $myPhoto->savePhoto($target_file);
+				//kui salvestus õnnestus, lisame andmebaasi
+				if($saveResult == 1){
+				  addPhotoData($target_file_name, $_POST["altText"], $_POST["privacy"]);
 				}
-				if($imageFileType == "png"){
-					$myTempImage = imagecreatefrompng($_FILES["fileToUpload"]["tmp_name"]);
-				}
-				if($imageFileType == "gif"){
-					$myTempImage = imagecreatefromgif($_FILES["fileToUpload"]["tmp_name"]);
-				}
+				unset($myPhoto);
 				
-				//vaatame pildi originaalsuuruse
-				$imageWidth = imagesx($myTempImage);
-				$imageHeight = imagesy($myTempImage);
-				//leian vajaliku suurendusfaktori
-				if($imageWidth > $imageHeight){
-					$sizeRatio = $imageWidth / 600;
-				} else {
-					$sizeRatio = $imageHeight / 400;
-				}
-				
-				$newWidth = round($imageWidth / $sizeRatio);
-				$newHeight = round($imageHeight / $sizeRatio);
-				$myImage = resizeImage($myTempImage, $imageWidth, $imageHeight, $newWidth, $newHeight);
-				
-				//lisame vesimärgi
-				$waterMark = imagecreatefrompng("../vp_picfiles/vp_logo_w100_overlay.png");
-				$waterMarkWidth = imagesx($waterMark);
-				$waterMarkHeight = imagesy($waterMark);
-				$waterMarkPosX = $newWidth - $waterMarkWidth - 10;
-				$waterMarkPosY = $newHeight - $waterMarkHeight - 10;
-				//kopeerin vesimärgi pikslid pildile
-				imagecopy($myImage, $waterMark, $waterMarkPosX, $waterMarkPosY, 0, 0, $waterMarkWidth, $waterMarkHeight);
-				
-				//lisame ka teksti
-				$textToImage = "Veebiprogrammeerimine";
-				$textColor = imagecolorallocatealpha($myImage, 255,255,255, 60);
-				//alpha 0 ... 127
-				//imagettftext($myImage, 20, -43, 10, 45, $textColor, "../vp_picfiles/ARIALBD.TTF", $textToImage);
-				imagettftext($myImage, 20, 0, 10, 25, $textColor, "../vp_picfiles/ARIALBD.TTF", $textToImage);
-				
-				//muudetud suurusega pilt kirjutatakse pildifailiks
-				if($imageFileType == "jpg" or $imageFileType == "jpeg"){
-				  if(imagejpeg($myImage, $target_file, 90)){
-                    echo "Korras!";
-					//kui pilt salvestati, siis lisame andmebaasi
-					addPhotoData($target_file_name, $_POST["altText"], $_POST["privacy"]);
-				  } else {
-					echo "Pahasti!";
-				  }
-				}
-				
-				//imagepng($myImage, $target_file, 6)
-				//imagegif($myImage, $target_file)
-				
-				imagedestroy($myTempImage);
-				imagedestroy($myImage);
 				
 /* 				if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 					echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " on üles laetud!";
