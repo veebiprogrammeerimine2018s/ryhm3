@@ -1,0 +1,25 @@
+Keheksanda koduse tööna on vaja täiendada piltide üleslaadimise klassi.
+Tunnis tegime klassi Photoupload, mis on classes kataloogis, failina Photoupload.class.php
+Tunnis tehtud osa katab varem tunnis loodud piltide üleslaadimise osast selle poole, mis algab, kui on selge, et on pilt ja seda saab üles laadida. Seega on juba kontrollitud: kas on pilt, kas on sobiv suurus, kas on sobiva formaadiga ja isegi ega pole juba olemas.
+
+Nüüd tuleb ka varasem osa klassi tõsta.
+Seega tuleks tõsta klassi kõik kontrollimised ja ka failitüübi kindlaks tegemine.
+
+Programmis peaks siis kohe, kui on selge, et valiti pilt üleslaadimiseks:
+if(!empty($_FILES["fileToUpload"]["name"])){
+
+selle rea järel tulekski luua objekt $myPhoto.
+Kuna ka failitüübi väljaselgitamine peaks toimuma klassis, siis failitüüpi klassile parameetrina enam ei saada (tuleb ka klassi konstruktorit muuta).
+$myPhoto = new Photoupload($_FILES["fileToUpload"]["tmp_name"]);
+
+Lisage klassile funktsioon kõigi kontrollide korraga tegemiseks või siis ka eraldi kontrollide funktsioonid. Need võiksid tagastada info, kas sobib või mitte.
+
+Lisage klassile funktsioon, mis teeb segeks failitüübi ja salvestab selle klassi public muutujasse, mida saab põhiprogrammis küsida.
+
+Kui klassi kontrollifunktsioonid on selgeks teinud, et pilti saab üles laadida, siis tuleb edasi minna nagu seni: pildi suuruse muutmine, vesimärk jne.
+
+Failinime moodustamine võiks jääda põhiprogrammi ülesandeks.
+
+Klassi funktsioone tuleks täiendada selliselt, et nad kasutaksid võimalikult palju parameetreid - oleksid võimalikult universaalsed. Näiteks vesimärgi funktsioonile peaks saama ette anda mistahes pildifaili, vesimärgi asukoha, kauguse servadest jms. Vesimärgina lisatava teksti funktsioonile tuleks ette anda tekst jms.
+
+Võtke sama klass kasutusele ka profiilipiltide üleslaadimisel.
