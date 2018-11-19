@@ -29,6 +29,7 @@
 	  <li>Valideeri anonüümseid <a href="validatemsg.php">sõnumeid</a></li>
 	  <li>Valideeritud sõnumid <a href="validatedmessages.php">kasutajate kaupa</a>.</li>
 	  <li>Fotode <a href="photoupload.php">üleslaadimine</a>.</li>
+	  <li>Avalike fotode <a href="gallerypub.php">galerii</a>.</li>
 	</ul>
 	
   </body>

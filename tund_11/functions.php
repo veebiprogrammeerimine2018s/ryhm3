@@ -5,6 +5,67 @@
   //alustan sessiooni
   session_start();
   
+  function readAllPublicPictureThumbsPage(){
+	$privacy = 2;
+	$html = "<p>Kahjuks pilte pole!</p>";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT filename, alttext FROM vpphotos3 WHERE privacy<=? AND deleted IS NULL LIMIT 2,6");
+	echo $mysqli->error;
+	$stmt->bind_param("i", $privacy);
+	$stmt->bind_result($filenameFromDb, $altFromDb);
+	$stmt->execute();
+	if($stmt->fetch()){
+		$html = '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
+	}
+	while($stmt->fetch()){
+		$html .= '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+	return $html;  
+  }
+  
+  function readAllPublicPictureThumbs(){
+	$privacy = 2;
+	$html = "<p>Kahjuks pilte pole!</p>";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT filename, alttext FROM vpphotos3 WHERE privacy<=? AND deleted IS NULL");
+	echo $mysqli->error;
+	$stmt->bind_param("i", $privacy);
+	$stmt->bind_result($filenameFromDb, $altFromDb);
+	$stmt->execute();
+	if($stmt->fetch()){
+		$html = '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
+	}
+	while($stmt->fetch()){
+		$html .= '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+	return $html;
+  }
+  
+  function latestPicture($privacy){
+	$html = "<p>Pole pilti, mida näidata!";
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+	$stmt = $mysqli->prepare("SELECT filename, alttext FROM vpphotos3 WHERE id=(SELECT MAX(id) FROM vpphotos3 WHERE privacy=? AND deleted IS NULL)");
+	echo $mysqli->error;
+	$stmt->bind_param("i", $privacy);
+	$stmt->bind_result($filenameFromDb, $altFromDb);
+	$stmt->execute();
+	if($stmt->fetch()){
+		//<img src=" " alt="">
+		//$GLOBALS["picDir"] .$filenameFromDb
+		$html = '<img src="' .$GLOBALS["picDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">';
+	}
+	
+	$stmt->close();
+	$mysqli->close();
+	return $html;
+  }
+  
   function addUserPhotoData($fileName){
 	$addedId = null;
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);

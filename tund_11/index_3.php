@@ -47,6 +47,9 @@
 	<hr>
 	<p><a href="addmsg.php">Lisa sõnum</a>!</p>
 	<hr>
+	<div style="float: left;">
+	  <?php echo latestPicture(1); ?>
+	</div>
 	<div>
 	  <?php echo allvalidmessages(); ?>
 	</div>
