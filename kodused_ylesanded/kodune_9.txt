@@ -1,0 +1,24 @@
+Järjekordne kodune töö
+
+Esiteks palun pingutada, et senised kodused tööd oleksid tehtud. Tean väga hästi, et kõik on minu poolt github'is valmis aga kui kopeerite, siis mõttega. Püüdke kasvõi mingisugune oma nüanss lisada, et saaksite olla enam-vähem kindlad, et saite aru, käite asjast üle.
+
+Teiseks palun muuta meie fotode üleslaadimise klassi nii, et ta oleks taas pisut otstarbekam. Muutke thumbnail'ide loomise ja tavapildi salvestamise funktsioone nii, et see kolmest erinevast failivormingust sõltuv pildi failiks salvestamise osa oleks vaid üks kord. Mina soovitaksin senise pildi salvestamise funktsiooni ümber nimetada (seni oli "savePhoto", siis pole vaja mujal palju parandada), panna ta kasutama veel üht parameetrit (pildiobjekti) ning siis kutsuda teda välja nii thumbnailide loomise funktsioonist (sealt saadaks thumbnail objekti) kui ka uuest "savePhoto" funktsioonist.
+
+Vaadake, mis parameetreid saaks veel klassi funktsioonidele lisada, et veelgi universaalsem oleks.
+
+Täiendage meie avalike piltide galeriid nii, et kõiki avalikke pilte näidatakski lehekülgede kaupa (näiteks aadressiga "gallerypub.php?page=2" oleks lehekülg 2). Määrake limiit, palju pilte ühel lehel võiks olla (kuna Teil on väga vähe pilte, las limiit olla 5).
+Esimesel lehel oleks vaja näidata esimesed 5 jne.
+
+Kõikide olemasolevate, avalike ja kustutamata piltide arvu annab näiteks SQL päring: 
+SELECT COUNT(*) FROM tabelinimi WHERE privacy<=? AND deleted IS NULL
+
+Ühe lehekülje jagu piltide jaoks SQL päring:
+SELECT filename, alttext FROM vpphotos3 WHERE privacy<=? AND deleted IS NULL LIMIT ?,?
+
+Seal lõpus LIMIT järel esimene arv näitab, mitu vahele jätta, koma järel teine aga mitut näidata (esimesel lehel näiteks on need 0,5
+
+NB! Selliselt URL-i kaudu jagatud andmed saab kätte $_GET massiivist (näiteks: $_GET["page"]).
+
+Lisage galerii lehele ka lingid eelmise ja järgmise lehekülje jaoks. Kui need on kogu aeg näha, pole hullu. Tunnis vaatame üle, kuidas teha nii, et oleks vastavalt vajadusele. Aga, kes soovib, võib ise ära teha, tegelikult pole keeruline.
+
+Edu.ee kõigile!
