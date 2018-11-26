@@ -76,18 +76,18 @@
   function readAllPublicPictureThumbsPage($page, $limit){
 	$privacy = 2;
 	$skip = ($page - 1) * $limit;
-	$html = "<p>Kahjuks pilte pole!</p>";
+	$html = "";
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
 	$stmt = $mysqli->prepare("SELECT filename, alttext FROM vpphotos3 WHERE privacy<=? AND deleted IS NULL LIMIT ?,?");
 	echo $mysqli->error;
 	$stmt->bind_param("iii", $privacy, $skip, $limit);
 	$stmt->bind_result($filenameFromDb, $altFromDb);
 	$stmt->execute();
-	if($stmt->fetch()){
-		$html = '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
-	}
 	while($stmt->fetch()){
-		$html .= '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'">' ."\n";
+		$html .= '<img src="' .$GLOBALS["thumbDir"] .$filenameFromDb .'" alt="'.$altFromDb .'" data-fn="' . $filenameFromDb.'">' ."\n";
+	}
+	if(empty($html)){
+		$html = "<p>Kahjuks pilte pole!</p>";
 	}
 	
 	$stmt->close();

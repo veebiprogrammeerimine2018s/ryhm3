@@ -9,6 +9,11 @@
 		echo "color: " .$_SESSION["txtColor"] ."} \n";
 	  ?>
 	</style>
+	<?php
+	  if(isset($scripts)){
+		echo $scripts;
+	  }
+	?>
   </head>
   <body>
     <div>

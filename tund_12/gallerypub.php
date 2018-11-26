@@ -28,6 +28,7 @@
   $publicThumbnails = readAllPublicPictureThumbsPage($page, $limit);
   
   $pageTitle = "Pildigalerii";
+  $scripts = '<link rel="stylesheet" type="text/css" href="style/modal.css">' ."\n" .'<script type="text/javascript" src="javascript/modal.js" defer></script>' ."\n" ;
   
   require("header.php");
   
@@ -40,6 +41,17 @@
 	  <li><a href="main.php">Tagasi pealehele</a></li>
 	</ul>
 	<hr>
+	
+	<!-- The Modal W3Schools eeskujul-->
+	<div id="myModal" class="modal">
+		<!-- The Close Button -->
+		<span class="close">&times;</span>
+		<!-- Modal Content (The Image) -->
+		<img class="modal-content" id="modalImg">
+		<!-- Modal Caption (Image Text) -->
+		<div id="caption"></div>
+	</div>
+	<div id="gallery">
 	<?php
 		echo "<p>";
 		if ($page > 1){
@@ -55,6 +67,7 @@
 		echo "</p> \n";
 		echo $publicThumbnails;
 	?>
+	</div>
 	
   </body>
 </html>
