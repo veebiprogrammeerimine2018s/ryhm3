@@ -32,3 +32,6 @@ CREATE TABLE `if18_rinde`.`vpphotos3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `
 Kasutajaprofiili pildid:
 
 CREATE TABLE `if18_rinde`.`vp_user_pictures3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `userid` INT(11) NOT NULL , `filename` VARCHAR(50) NOT NULL , `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , `deleted` DATE NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+Piltide hinded:
+CREATE TABLE `if18_rinde`.`vpphotoratings3` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `photoid` INT(11) NOT NULL , `userid` INT(11) NOT NULL , `rating` INT(1) NOT NULL , `added` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
