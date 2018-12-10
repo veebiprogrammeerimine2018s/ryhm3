@@ -31,7 +31,7 @@ Selle osa kujundamiseks lisage modal.css stiilifaili järgmine osa:
 Galerii moodustamise jaoks kasutatav SQL käsk peab nüüd lugema infot fotode andmetabelist, kasutajate andmetabelist ja fotode hindamise andmetabelist. Kogu see info tuleb kokku panna, tulemusi peab saama ka siis, kui näiteks hinnet polegi (sellisel juhul peabki hinde kohal olema märge: "puudub" või "Pole hinnatud".
 
 Kasutada saab järgmist SQL päringut:
-"SELECT vpphotos.id, vpusers.firstname, vpusers.lastname, vpphotos.filename, vpphotos.thumbnail, vpphotos.alt, AVG(vpphotoratings.rating) as AvgValue FROM vpphotos JOIN vpusers ON vpphotos.userid = vpusers.id LEFT JOIN vpphotoratings ON vpphotoratings.photoid = vpphotos.id WHERE vpphotos.privacy < ? AND deleted IS NULL GROUP BY vpphotos.id DESC LIMIT ?,?"
+"SELECT vpphotos.id, vpusers.firstname, vpusers.lastname, vpphotos.filename, vpphotos.alt, AVG(vpphotoratings.rating) as AvgValue FROM vpphotos JOIN vpusers ON vpphotos.userid = vpusers.id LEFT JOIN vpphotoratings ON vpphotoratings.photoid = vpphotos.id WHERE vpphotos.privacy < ? AND deleted IS NULL GROUP BY vpphotos.id DESC LIMIT ?,?"
 
 NB! Siin on taelite nimed vaja kontrollida ning esimesena kuvatakse uuemad pildid (DESC).
 Kätte saadakse siit sama info, mis me seni oleme lugenud. Lisaks veel omaniku ees- ja perekonnanimi ning olemasolev keskmine hinne.
