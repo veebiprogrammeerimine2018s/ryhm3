@@ -1,0 +1,82 @@
+Täiendage avalike piltide galeriid.
+
+Paigutage kõib "thumbnail'id" <div> elemendi sisse, lisage pildi alla tekstilõigud foto "omaniku" (kes laadis üles) nime ja hinde näitamiseks.
+Galerii kuvamisel tuleks hinde lõigule anda id atribuut, mille väärtus võiks olla näiteks "score" + photoid
+
+Näiteks võiks iga "thumbnail'i" osa veebilehel välja näha selline:
+
+<div class="thumbGallery">
+	<img src="pildifailiaadress" alt="Pildi alternatiivtekst" data-fn="pildifailinimi" data-id="9999999">
+	<p>Eesnimi Perekonnanimi</p> 
+	<p id="score9999999">Hinne: 4</p> 
+</div>
+
+Selle osa kujundamiseks lisage modal.css stiilifaili järgmine osa:
+
+.thumbGallery
+{
+	width: 100px;
+	height: 200px;
+	padding: 5px;
+	float: left;
+	margin-right: 5px;
+	/*display: inline;*/
+}
+
+.thumbGallery p
+{
+	height: 40px;
+}
+
+Galerii moodustamise jaoks kasutatav SQL käsk peab nüüd lugema infot fotode andmetabelist, kasutajate andmetabelist ja fotode hindamise andmetabelist. Kogu see info tuleb kokku panna, tulemusi peab saama ka siis, kui näiteks hinnet polegi (sellisel juhul peabki hinde kohal olema märge: "puudub" või "Pole hinnatud".
+
+Kasutada saab järgmist SQL päringut:
+"SELECT vpphotos.id, vpusers.firstname, vpusers.lastname, vpphotos.filename, vpphotos.thumbnail, vpphotos.alt, AVG(vpphotoratings.rating) as AvgValue FROM vpphotos JOIN vpusers ON vpphotos.userid = vpusers.id LEFT JOIN vpphotoratings ON vpphotoratings.photoid = vpphotos.id WHERE vpphotos.privacy < ? AND deleted IS NULL GROUP BY vpphotos.id DESC LIMIT ?,?"
+
+NB! Siin on taelite nimed vaja kontrollida ning esimesena kuvatakse uuemad pildid (DESC).
+Kätte saadakse siit sama info, mis me seni oleme lugenud. Lisaks veel omaniku ees- ja perekonnanimi ning olemasolev keskmine hinne.
+
+Uue hinde lisamisel tuleks ka "Thumbnail'i" all keskmine hinne uuendada (üle kirjutada).
+
+*************************************************************************************************
+Uudiste lisamine
+
+Andmetabel:
+uudiste andmebaas
+
+CREATE TABLE `andmebaas`.`vpnews` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `userid` INT(7) NOT NULL , `title` VARCHAR(140) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL , `content` VARCHAR(2000) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL , `expire` DATE NOT NULL , `added` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `deleted` TIMESTAMP NULL DEFAULT NULL , PRIMARY KEY (`id`), INDEX (`userid`)) ENGINE = InnoDB;
+
+Lehele:
+
+Lisame tekstiredaktori, selleks lehe päisesse:
+<!-- Lisame tekstiredaktory TinyMCE -->
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>
+	tinymce.init({
+		selector:'textarea#newsEditor',
+		plugins: "link",
+		menubar: 'edit',
+	});
+</script>
+
+Uudise lisamise vorm:
+<form method="POST" action="/~rinde/veebiprogrammeerimine_2017/forfuture/tund14/usernews.php">
+	<label>Uudise pealkiri:</label><br><input type="text" name="newsTitle" id="newsTitle" style="width: 100%;" value=""><br>
+	<label>Uudise sisu:</label><br>
+	<textarea name="newsEditor" id="newsEditor"></textarea>
+	<br>
+	<label>Uudis nähtav kuni (kaasaarvatud)</label>
+	<input type="date" name="expiredate" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="2018-12-10">
+	
+	<input name="newsBtn" id="newsBtn" type="submit" value="Salvesta uudis!">
+</form>
+
+Selles vormis võiks vaikimisi aegumistähtajaks panna tänase kuupäeva. Selleks võib kasutada näiteks muutujat:
+$expiredate = date("Y-m-d");
+Ja selle muutuja väärtuse echo käsuga expiredate väärtuseks panna (tegelikult täpselt see asi seal näidises ongi tehtud
+
+Uudise salvestamisel tulebki andmebaasi kirjutada uudise lisanud kasutaja id, uudise pealkiri, sisu ja aegumiskuupäev.
+
+Uudiste kuvamisel tuleb lugeda need uudised, millede puhul aegumiskuupäev on >= tänane kuupäev.
+
+Lisage uudiste näitamine Teie valikul sobivasse kohta!
