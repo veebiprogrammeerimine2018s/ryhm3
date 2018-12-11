@@ -60,7 +60,7 @@ Lisame tekstiredaktori, selleks lehe päisesse:
 </script>
 
 Uudise lisamise vorm:
-<form method="POST" action="/~rinde/veebiprogrammeerimine_2017/forfuture/tund14/usernews.php">
+<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<label>Uudise pealkiri:</label><br><input type="text" name="newsTitle" id="newsTitle" style="width: 100%;" value=""><br>
 	<label>Uudise sisu:</label><br>
 	<textarea name="newsEditor" id="newsEditor"></textarea>
